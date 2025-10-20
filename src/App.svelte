@@ -10,8 +10,7 @@
 		side: {
 			id: "",
 			title: "",
-			feature: "",
-			orientation: "right"
+			feature: "dashboard"
 		}
 	});
 	let layout = $derived.by(() => screen_orientation.main.orientation.includes("split")
@@ -40,7 +39,7 @@
 </header>
 <main class={layout}>
 	<article class={main_class}><Dashboard /></article>
-	<article class={side_class}></article>
+	<article class={side_class}><Dashboard /></article>
 </main>
 <footer>
 	<p><a href="https://github.com/SmKou/creative-writing-browser-editor">Creative Writing Browser editor</a> © 2025 by <a href="https://github.com/SmKou">Sm Kou</a> is licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a><img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" alt="" style="max-width: 1em;max-height:1em;margin-left: .2em;"><img src="https://mirrors.creativecommons.org/presskit/icons/by.svg" alt="" style="max-width: 1em;max-height:1em;margin-left: .2em;"><img src="https://mirrors.creativecommons.org/presskit/icons/nc.svg" alt="" style="max-width: 1em;max-height:1em;margin-left: .2em;"><img src="https://mirrors.creativecommons.org/presskit/icons/sa.svg" alt="" style="max-width: 1em;max-height:1em;margin-left: .2em;"></p>
@@ -67,8 +66,11 @@
 		width: 100%;
 		height: calc(100% - 84px);
 		display: flex;
-		flex-direction: column;
 		align-items: center;
+
+		&:has(.main.right) {
+			flex-direction: row-reverse;
+		}
 
 		article {
 			height: 100%;
@@ -79,9 +81,10 @@
 			column-gap: 16px;
 			color: light-dark(black, white);
 			background-color: light-dark(white, black);
+		}
 
-			&.left { left: 0 }
-			&.right { right: 0 }
+		@media (max-width: 800px) and (orientation: landscape) {
+			article { grid-template-columns: 1fr }
 		}
 
 		&.main-none, &.main-side {
