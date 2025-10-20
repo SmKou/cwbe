@@ -1,38 +1,46 @@
 <script>
-	import Dashboard from './lib/Dashboard'
+	import Dashboard from './Dashboard.svelte'
 	const screen_orientation = $state({
 		main: {
+			id: "",
 			title: "",
 			feature: "dashboard",
-			side: "left"
+			orientation: "left"
 		},
-		side: ""
-	})
-	// { id, title, feature, side }
-	let layout = $derived.by(() => screen_orientation.main.side.includes("split")
+		side: {
+			id: "",
+			title: "",
+			feature: "",
+			orientation: "right"
+		}
+	});
+	let layout = $derived.by(() => screen_orientation.main.orientation.includes("split")
 		? "splitscreen"
-		: screen_orientation.side
+		: screen_orientation.side.feature
 		? "main-side"
 		: "main-none"
-	)
-
+	);
+	let main_class = $derived.by(() => {
+		const orientation = screen_orientation.main.orientation;
+		return `main ${orientation}`;
+	});
+	let side_class = $derived.by(() => {
+		const orientation = screen_orientation.side.orientation;
+		return `side ${orientation}`;
+	});
 	const current = $state({
 		id: "",
 		title: "Creative Writing Browser editor",
 		type: "work"
-	})
+	});
 </script>
 
 <header>
     <h1>{ current.title }</h1>
 </header>
 <main class={layout}>
-	<article class="main">
-		<Dashboard is_side="false" />
-	</article>
-	{#if screen_orientation.side}
-	<article class="side"></article>
-	{/if}
+	<article class={main_class}><Dashboard /></article>
+	<article class={side_class}></article>
 </main>
 <footer>
 	<p><a href="https://github.com/SmKou/creative-writing-browser-editor">Creative Writing Browser editor</a> © 2025 by <a href="https://github.com/SmKou">Sm Kou</a> is licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a><img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" alt="" style="max-width: 1em;max-height:1em;margin-left: .2em;"><img src="https://mirrors.creativecommons.org/presskit/icons/by.svg" alt="" style="max-width: 1em;max-height:1em;margin-left: .2em;"><img src="https://mirrors.creativecommons.org/presskit/icons/nc.svg" alt="" style="max-width: 1em;max-height:1em;margin-left: .2em;"><img src="https://mirrors.creativecommons.org/presskit/icons/sa.svg" alt="" style="max-width: 1em;max-height:1em;margin-left: .2em;"></p>
@@ -66,11 +74,21 @@
 			height: 100%;
 			padding: 8px;
 			overflow-y: scroll;
-			color: light-dark();
-			background: light-dark();
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			column-gap: 16px;
+			color: light-dark(black, white);
+			background-color: light-dark(white, black);
 
 			&.left { left: 0 }
 			&.right { right: 0 }
+		}
+
+		&.main-none, &.main-side {
+			article.main {
+				border-left: 1px solid var(--mid);
+				border-right: 1px solid var(--mid);
+			}
 		}
 
 		&.main-none {
