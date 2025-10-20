@@ -13,14 +13,14 @@
 		{/each}
 	</div>
 </section>
-<section class="half-width">
+<section>
 	<h3>Languages</h3>
 	<div class="list">
 		{#each data.langs as lang}
 		{/each}
 	</div>
 </section>
-<section class="half-width">
+<section>
 	<h3 title="alternatively worlds or environments">Settings</h3>
 	<div class="list">
 		{#each data.envs as env}

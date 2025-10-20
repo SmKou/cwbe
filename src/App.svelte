@@ -50,7 +50,7 @@
 	header {
 		width: 100%;
 		height: 48px;
-		border-bottom: 3px solid light-dark(var(--light), var(--dark));
+		border-bottom: 2px solid light-dark(var(--light), var(--dark));
 		display: flex;
 		align-items: center;
 		background: light-dark(black, white);
